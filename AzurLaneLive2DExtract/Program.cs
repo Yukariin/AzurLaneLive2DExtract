@@ -29,16 +29,16 @@ namespace AzurLaneLive2DExtract
                 var assetsFile = new AssetsFile(path, new EndianBinaryReader(bundleFile.fileList[0].stream));
                 var assets = assetsFile.preloadTable.Select(x => x.Value).ToArray();
                 var name = Path.GetFileName(path);
-                var destPath = @"live2d\" + name + @"\";
-                var destTexturePath = @"live2d\" + name + @"\textures\";
-                var destAnimationPath = @"live2d\" + name + @"\motions\";
+                var destPath = Path.Combine("live2d", name);
+                var destTexturePath = Path.Combine(destPath, "textures");
+                var destAnimationPath = Path.Combine(destPath, "motions");
                 Directory.CreateDirectory(destPath);
                 Directory.CreateDirectory(destTexturePath);
                 Directory.CreateDirectory(destAnimationPath);
                 Console.WriteLine($"Extract {name}");
                 //physics
                 var physics = new TextAsset(assets.First(x => x.Type == ClassIDReference.TextAsset));
-                File.WriteAllBytes($"{destPath}{physics.m_Name}.json", physics.m_Script);
+                File.WriteAllBytes(Path.Combine(destPath, $"{physics.m_Name}.json"), physics.m_Script);
                 //moc
                 var moc = assets.First(x => x.Type == ClassIDReference.MonoBehaviour);
                 foreach (var assetPreloadData in assets.Where(x => x.Type == ClassIDReference.MonoBehaviour))
@@ -52,7 +52,7 @@ namespace AzurLaneLive2DExtract
                 mocReader.Position += 28;
                 mocReader.ReadAlignedString();
                 var mocBuff = mocReader.ReadBytes(mocReader.ReadInt32());
-                File.WriteAllBytes($"{destPath}{name}.moc3", mocBuff);
+                File.WriteAllBytes(Path.Combine(destPath, $"{name}.moc3"), mocBuff);
                 //texture
                 var textures = new SortedSet<string>();
                 foreach (var texture in assets.Where(x => x.Type == ClassIDReference.Texture2D))
@@ -61,7 +61,7 @@ namespace AzurLaneLive2DExtract
                     using (var bitmap = new Texture2DConverter(texture2D).ConvertToBitmap(true))
                     {
                         textures.Add($"textures/{texture2D.m_Name}.png");
-                        bitmap.Save($"{destTexturePath}{texture2D.m_Name}.png", ImageFormat.Png);
+                        bitmap.Save(Path.Combine(destTexturePath, $"{texture2D.m_Name}.png"), ImageFormat.Png);
                     }
                 }
                 //motions
@@ -98,6 +98,7 @@ namespace AzurLaneLive2DExtract
                             Id = track.Name,
                             Segments = new List<float> { 0f, track.Curve[0].value }
                         };
+                        totalPointCount += 1;
                         for (var j = 1; j < track.Curve.Count; j++)
                         {
                             var curve = track.Curve[j];
@@ -159,7 +160,8 @@ namespace AzurLaneLive2DExtract
                     json.Meta.TotalPointCount = totalPointCount;
 
                     motions.Add($"motions/{animation.Name}.motion3.json");
-                    File.WriteAllText($"{destAnimationPath}{animation.Name}.motion3.json", JsonConvert.SerializeObject(json, Formatting.Indented, new MyJsonConverter()));
+                    File.WriteAllText(Path.Combine(destAnimationPath, $"{animation.Name}.motion3.json"),
+                                      JsonConvert.SerializeObject(json, Formatting.Indented, new MyJsonConverter()));
                 }
                 //model
                 var job = new JObject();
@@ -198,7 +200,7 @@ namespace AzurLaneLive2DExtract
                         }
                     }
                 };
-                File.WriteAllText($"{destPath}{name}.model3.json", JsonConvert.SerializeObject(model3, Formatting.Indented));
+                File.WriteAllText(Path.Combine(destPath, $"{name}.model3.json"), JsonConvert.SerializeObject(model3, Formatting.Indented));
             }
             Console.WriteLine("Done!");
             Console.Read();
