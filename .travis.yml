@@ -9,8 +9,7 @@ script:
   - dotnet build AzurLaneLive2DExtract -c Release
 before_deploy:
   - dotnet publish AzurLaneLive2DExtract -c Release -r linux-x64
-  - cd AzurLaneLive2DExtract/bin/Release/netcoreapp2.2/linux-x64/publish
-  - tar -zcf AzurLaneLive2DExtract-linux-x64.tar.gz .
+  - tar -zcf AzurLaneLive2DExtract-linux-x64.tar.gz -C AzurLaneLive2DExtract/bin/Release/netcoreapp2.2/linux-x64/publish .
 deploy:
   provider: releases
   api_key:
