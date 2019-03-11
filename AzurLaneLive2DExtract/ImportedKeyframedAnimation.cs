@@ -12,6 +12,7 @@ namespace AzurLaneLive2DExtract
         public string Name { get; set; }
         public float SampleRate { get; set; }
         public float Duration { get; set; }
+        public bool Loop { get; set; }
 
         public List<ImportedAnimationKeyframedTrack> TrackList { get; set; } = new List<ImportedAnimationKeyframedTrack>();
 
@@ -33,6 +34,12 @@ namespace AzurLaneLive2DExtract
         public T value { get; set; }
         public T inSlope { get; set; }
         public T outSlope { get; set; }
+
+        public ImportedKeyframe(float time, T value)
+        {
+            this.time = time;
+            this.value = value;
+        }
 
         public ImportedKeyframe(float time, T value, T inSlope, T outSlope)
         {

@@ -28,6 +28,7 @@ namespace AzurLaneLive2DExtract
                 iAnim.Name = animationClip.m_Name;
                 iAnim.SampleRate = animationClip.m_SampleRate;
                 iAnim.Duration = animationClip.m_MuscleClip.m_StopTime;
+                iAnim.Loop = animationClip.m_MuscleClip.m_LoopTime;
                 var m_Clip = animationClip.m_MuscleClip.m_Clip;
                 var streamedFrames = m_Clip.m_StreamedClip.ReadData();
                 var m_ClipBindingConstant = animationClip.m_ClipBindingConstant;
@@ -93,7 +94,7 @@ namespace AzurLaneLive2DExtract
             var track = iAnim.FindTrack(boneName);
             track.Target = target;
             var value = data[curveIndex++];
-            track.Curve.Add(new ImportedKeyframe<float>(time, value, 0, 0));
+            track.Curve.Add(new ImportedKeyframe<float>(time, value));
         }
 
         private void GetLive2dPath(uint path, out string target, out string id)

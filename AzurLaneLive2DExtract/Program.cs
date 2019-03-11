@@ -80,7 +80,7 @@ namespace AzurLaneLive2DExtract
                         {
                             Duration = animation.Duration,
                             Fps = animation.SampleRate,
-                            Loop = true,
+                            Loop = animation.Loop,
                             CurveCount = animation.TrackList.Count,
                             UserDataCount = 0,
                             TotalUserDataSize = 0
