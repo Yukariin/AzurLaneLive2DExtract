@@ -1,0 +1,8 @@
+language: csharp
+dotnet: 2.2
+env:
+  global:
+    - DOTNET_CLI_TELEMETRY_OPTOUT: 1
+script:
+  - dotnet restore AzurLaneLive2DExtract/AzurLaneLive2DExtract.csproj
+  - dotnet build AzurLaneLive2DExtract/AzurLaneLive2DExtract.csproj -c Release
