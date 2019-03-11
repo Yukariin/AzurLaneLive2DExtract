@@ -70,31 +70,67 @@ namespace AzurLaneLive2DExtract
         private void ReadStreamedData(ImportedKeyframedAnimation iAnim, AnimationClipBindingConstant m_ClipBindingConstant, float time, StreamedClip.StreamedCurveKey curveKey)
         {
             var binding = m_ClipBindingConstant.FindBinding(curveKey.index);
-            if (binding.path == 0)
+            if (binding.path == 0) // Model binding, path is empty
             {
-                return;
+                var target = "Model";
+                var id = string.Empty;
+                if (binding.attribute == 2353026298) // Opacity -> Opacity
+                {
+                    id = "Opacity";
+                }
+                else if (binding.attribute == 66473442) // EyeOpening -> EyeBlink
+                {
+                    id = "EyeBlink";
+                }
+                else if (binding.attribute == 4109387685) // MouthOpening -> LipSync
+                {
+                    id = "LipSync";
+                }
+                var track = iAnim.FindTrack(id);
+                track.Target = target;
+                track.Curve.Add(new ImportedKeyframe<float>(time, curveKey.value, curveKey.inSlope, curveKey.outSlope));
             }
-
-            GetLive2dPath(binding.path, out var target, out var boneName);
-            var track = iAnim.FindTrack(boneName);
-            track.Target = target;
-            track.Curve.Add(new ImportedKeyframe<float>(time, curveKey.value, curveKey.inSlope, curveKey.outSlope));
+            else
+            {
+                GetLive2dPath(binding.path, out var target, out var boneName);
+                var track = iAnim.FindTrack(boneName);
+                track.Target = target;
+                track.Curve.Add(new ImportedKeyframe<float>(time, curveKey.value, curveKey.inSlope, curveKey.outSlope));
+            }
         }
 
         private void ReadCurveData(ImportedKeyframedAnimation iAnim, AnimationClipBindingConstant m_ClipBindingConstant, int index, float time, float[] data, int offset, ref int curveIndex)
         {
             var binding = m_ClipBindingConstant.FindBinding(index);
-            if (binding.path == 0)
+            if (binding.path == 0) // Model binding, path is empty
             {
-                curveIndex++;
-                return;
+                var target = "Model";
+                var id = string.Empty;
+                if (binding.attribute == 2353026298) // Opacity -> Opacity
+                {
+                    id = "Opacity";
+                }
+                else if (binding.attribute == 66473442) // EyeOpening -> EyeBlink
+                {
+                    id = "EyeBlink";
+                }
+                else if (binding.attribute == 4109387685) // MouthOpening -> LipSync
+                {
+                    id = "LipSync";
+                }
+                var track = iAnim.FindTrack(id);
+                track.Target = target;
+                var value = data[curveIndex++];
+                track.Curve.Add(new ImportedKeyframe<float>(time, value));
             }
-
-            GetLive2dPath(binding.path, out var target, out var boneName);
-            var track = iAnim.FindTrack(boneName);
-            track.Target = target;
-            var value = data[curveIndex++];
-            track.Curve.Add(new ImportedKeyframe<float>(time, value));
+            else
+            {
+                GetLive2dPath(binding.path, out var target, out var boneName);
+                var track = iAnim.FindTrack(boneName);
+                track.Target = target;
+                var value = data[curveIndex++];
+                track.Curve.Add(new ImportedKeyframe<float>(time, value));
+            }
         }
 
         private void GetLive2dPath(uint path, out string target, out string id)
