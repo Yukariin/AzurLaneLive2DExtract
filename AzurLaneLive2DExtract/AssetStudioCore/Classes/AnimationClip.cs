@@ -34,6 +34,16 @@ namespace AssetStudioCore.Classes
         }
     }
 
+    public enum WrapMode
+    {
+        Once = 1,
+        Loop = 2,
+        PingPong = 4,
+        Default = 0,
+        ClampForever = 8,
+        Clamp = 1
+    }
+
     public class AnimationCurve<T>
     {
         public List<Keyframe<T>> m_Curve { get; set; }
@@ -843,7 +853,7 @@ namespace AssetStudioCore.Classes
         public List<FloatCurve> m_FloatCurves { get; set; }
         public List<PPtrCurve> m_PPtrCurves { get; set; }
         public float m_SampleRate { get; set; }
-        public int m_WrapMode { get; set; }
+        public WrapMode m_WrapMode { get; set; }
         public AABB m_Bounds { get; set; }
         public uint m_MuscleClipSize { get; set; }
         public ClipMuscleConstant m_MuscleClip { get; set; }
@@ -929,7 +939,7 @@ namespace AssetStudioCore.Classes
             }
 
             m_SampleRate = reader.ReadSingle();
-            m_WrapMode = reader.ReadInt32();
+            m_WrapMode = (WrapMode)reader.ReadInt32();
             if (version[0] > 3 || (version[0] == 3 && version[1] >= 4)) //3.4 and up
             {
                 m_Bounds = new AABB(reader);
