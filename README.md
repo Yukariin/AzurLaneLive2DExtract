@@ -1,4 +1,5 @@
 # AzurLaneLive2DExtract
-碧蓝航线Live2D提取  
-使用方法：拖放Live2D文件到exe上  
-代码偷懒，转换逻辑Unity下的Cubism 3通用
+[![Build Status](https://travis-ci.org/Yukariin/AzurLaneLive2DExtract.svg?branch=master)](https://travis-ci.org/Yukariin/AzurLaneLive2DExtract)
+Azur Lane Live2D Extractor
+Usage：Drag and drop Live2D asset to exe-file
+Code is lazy, converts Unity logic into Cubism3 files
