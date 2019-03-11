@@ -832,6 +832,30 @@ namespace AssetStudioCore.Classes
         }
     }
 
+    public class AnimationEvent
+    {
+        public float time;
+        public string functionName;
+        public string stringParameter;
+        public PPtr objectReferenceParameter;
+        public float floatParameter;
+        public int intParameter;
+        public int messageOptions;
+
+        public AnimationEvent(AssetPreloadData preloadData)
+        {
+            var reader = preloadData.sourceFile.reader;
+            // check version?
+            time = reader.ReadSingle();
+            functionName = reader.ReadAlignedString();
+            stringParameter = reader.ReadAlignedString();
+            objectReferenceParameter = preloadData.sourceFile.ReadPPtr();
+            floatParameter = reader.ReadSingle();
+            intParameter = reader.ReadInt32();
+            messageOptions = reader.ReadInt32();
+        }
+    }
+
     public enum AnimationType
     {
         kLegacy = 1,
@@ -858,7 +882,7 @@ namespace AssetStudioCore.Classes
         public uint m_MuscleClipSize { get; set; }
         public ClipMuscleConstant m_MuscleClip { get; set; }
         public AnimationClipBindingConstant m_ClipBindingConstant { get; set; }
-        //public List<AnimationEvent> m_Events { get; set; }
+        public List<AnimationEvent> m_Events { get; set; }
 
 
         public AnimationClip(AssetPreloadData preloadData) : base(preloadData)
@@ -953,12 +977,12 @@ namespace AssetStudioCore.Classes
             {
                 m_ClipBindingConstant = new AnimationClipBindingConstant(preloadData);
             }
-            /*int numEvents = reader.ReadInt32();
+            int numEvents = reader.ReadInt32();
             m_Events = new List<AnimationEvent>(numEvents);
             for (int i = 0; i < numEvents; i++)
             {
-                m_Events.Add(new AnimationEvent(stream, file.Version[0] - '0'));
-            }*/
+                m_Events.Add(new AnimationEvent(preloadData));
+            }
         }
     }
 }
