@@ -7,9 +7,11 @@ namespace AssetStudioCore.Classes
 {
     public abstract class Behaviour : Component
     {
+        public byte m_Enabled;
+
         protected Behaviour(AssetPreloadData preloadData) : base(preloadData)
         {
-            var m_Enabled = reader.ReadByte();
+            m_Enabled = reader.ReadByte();
             reader.AlignStream(4);
         }
     }
