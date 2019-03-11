@@ -14,7 +14,9 @@ deploy:
   provider: releases
   api_key:
     secure: sl/NcXPHTiHKk/KH0APlU7soBDKQ/ihDSdZGGfWiz9bEZQXhRFHebP1SxRD4jIB+O7lcuUGBEliQg37ypQZzsBc73c+tH2RZAsVgUIUbEYYMkkQiC0nSB7nSQ9KxyYwk63daFR7Qmk98f1uIgwFhvWWk3fO+1iSPK8wTWIcnLY3gS+S8NIQ0Fkfi8mGxcWCxvuqhfiAFD5kwwSxG77daqsD4gUER2fQJHMhQy3+e9087KSmX3iuXrhyuMs/HsULeAMlS+HI8K1X4/QFy0047z6+RPm45iyPXkUM6MZ2uxl+eO/1wFdT+JK6cIHpHSKXPBZ7k60M8nJCWaf1Lw4b7FE1rXtrb7n8Q9wVexs4UFWHmQmQOLtHhjM4a3uEfdjBl/p/VQvuTm2uw6cTXHoAQQN0Qmd4N7By7f/NOhoGkMYN4pXRHRneClhemjBUJwLzvGLZgO/+mkE5qUsn1rPGKk//tZdTE5FR5Qt4GcegHcaF755W9NjFk2XOW9nVaxF+4DJfQxIzZneFq4malrLWkW7NJL6WCzpeSMoBu0bA9r3P5GyCjktiloActFdfjnEFZTLzc3ehWqSdQjDfCVsbKy/na+bAFYY1JkWvI2i9GtRkSD5umseaDqOkCERrIzkqXVY4KjIV0bNKf7CpQjFIqYrDq2kYZx2ZE69VXMM0lW7c=
-  file: AzurLaneLive2DExtract/bin/Release/netcoreapp2.2/linux-x64/AzurLaneLive2DExtract
+  file:
+    - "AzurLaneLive2DExtract/bin/Release/netcoreapp2.2/linux-x64/AzurLaneLive2DExtract"
+    - "AzurLaneLive2DExtract/bin/Release/netcoreapp2.2/linux-x64/AzurLaneLive2DExtract.dll"
   skip_cleanup: true
   on:
     tags: true
