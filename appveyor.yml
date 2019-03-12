@@ -1,0 +1,14 @@
+version: '1.0.{build}'
+configuration:
+  - Debug
+  - Release
+environment:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+init:
+  - cmd: git config --global core.autocrlf true
+before_build:
+  - cmd: dotnet --version
+build_script:
+  - cmd: dotnet publish "AzurLaneLive2DExtract" -c %CONFIGURATION% -o artifacts
+artifacts:
+  - path: artifacts
