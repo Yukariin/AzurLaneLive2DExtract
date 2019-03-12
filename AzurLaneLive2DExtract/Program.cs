@@ -96,7 +96,7 @@ namespace AzurLaneLive2DExtract
                         {
                             Target = track.Target,
                             Id = track.Name,
-                            Segments = new List<float> { 0f, track.Curve[0].value }
+                            Segments = new List<float> { track.Curve[0].time, track.Curve[0].value }
                         };
                         totalPointCount += 1;
                         for (var j = 1; j < track.Curve.Count; j++)
@@ -122,6 +122,7 @@ namespace AzurLaneLive2DExtract
                                         json.Curves[i].Segments.Add(nextCurve.value);
                                         j += 1;
                                         totalPointCount += 1;
+                                        totalSegmentCount += 1;
                                         continue;
                                     }
                                 }
@@ -132,13 +133,6 @@ namespace AzurLaneLive2DExtract
                                     json.Curves[i].Segments.Add(curve.value);
                                     totalPointCount += 1;
                                 }
-                                /*else if (preCurve.outSlope == 0f && Math.Abs(curve.inSlope) < 0.0001f) //LinearSegment
-                                {
-                                    json.Curves[i].Segments.Add(0f);
-                                    json.Curves[i].Segments.Add(curve.time);
-                                    json.Curves[i].Segments.Add(curve.value);
-                                    totalPointCount += 1;
-                                }*/
                                 else //BezierSegment
                                 {
                                     var tangentLength = (curve.time - preCurve.time) / 3f;
@@ -203,7 +197,6 @@ namespace AzurLaneLive2DExtract
                 File.WriteAllText(Path.Combine(destPath, $"{name}.model3.json"), JsonConvert.SerializeObject(model3, Formatting.Indented));
             }
             Console.WriteLine("Done!");
-            Console.Read();
         }
     }
 }
