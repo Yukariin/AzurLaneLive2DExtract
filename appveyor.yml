@@ -11,4 +11,4 @@ before_build:
 build_script:
   - cmd: dotnet publish "AzurLaneLive2DExtract" -c %CONFIGURATION% -o artifacts
 artifacts:
-  - path: artifacts
+  - path: AzurLaneLive2DExtract\artifacts
