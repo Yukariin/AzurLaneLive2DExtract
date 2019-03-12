@@ -2,6 +2,7 @@ version: '1.0.{build}'
 configuration:
   - Debug
   - Release
+platform: Any CPU
 environment:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
 init:
@@ -9,6 +10,10 @@ init:
 before_build:
   - cmd: dotnet --version
 build_script:
-  - cmd: dotnet publish "AzurLaneLive2DExtract" -c %CONFIGURATION% -o artifacts
+  - cmd: dotnet publish "AzurLaneLive2DExtract" -c %CONFIGURATION% -r win-x86 -o artifacts-x86
+  - cmd: dotnet publish "AzurLaneLive2DExtract" -c %CONFIGURATION% -r win-x64 -o artifacts-x64
 artifacts:
-  - path: AzurLaneLive2DExtract\artifacts
+  - path: AzurLaneLive2DExtract\artifacts-x86
+    name: AzurLaneLive2DExtract-win-x86
+  - path: AzurLaneLive2DExtract\artifacts-x64
+    name: AzurLaneLive2DExtract-win-x64
