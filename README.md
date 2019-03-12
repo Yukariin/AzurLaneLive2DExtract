@@ -1,5 +1,6 @@
 # AzurLaneLive2DExtract
 [![Build Status](https://travis-ci.org/Yukariin/AzurLaneLive2DExtract.svg?branch=master)](https://travis-ci.org/Yukariin/AzurLaneLive2DExtract)
+[![Build status](https://ci.appveyor.com/api/projects/status/fbqv2xr0vn5tnx7q?svg=true)](https://ci.appveyor.com/project/Yukariin/azurlanelive2dextract)
 
 Azur Lane Live2D Extractor
 
