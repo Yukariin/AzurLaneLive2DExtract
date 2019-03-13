@@ -87,8 +87,8 @@ namespace AzurLaneLive2DExtract
                         },
                         Curves = new SerializableCurve[animation.TrackList.Count]
                     };
-                    int totalSegmentCount = 1;
-                    int totalPointCount = 1;
+                    int totalSegmentCount = 0;
+                    int totalPointCount = 0;
                     for (int i = 0; i < animation.TrackList.Count; i++)
                     {
                         var track = animation.TrackList[i];
@@ -99,6 +99,7 @@ namespace AzurLaneLive2DExtract
                             Segments = new List<float> { track.Curve[0].time, track.Curve[0].value }
                         };
                         totalPointCount += 1;
+                        totalSegmentCount += 1;
                         for (var j = 1; j < track.Curve.Count; j++)
                         {
                             var curve = track.Curve[j];
@@ -160,9 +161,9 @@ namespace AzurLaneLive2DExtract
                 //model
                 var job = new JObject();
                 var jarray = new JArray();
-                var tempjob = new JObject();
                 foreach (var motion in motions)
                 {
+                    var tempjob = new JObject();
                     tempjob["File"] = motion;
                     jarray.Add(tempjob);
                 }
