@@ -99,7 +99,6 @@ namespace AzurLaneLive2DExtract
                             Segments = new List<float> { track.Curve[0].time, track.Curve[0].value }
                         };
                         totalPointCount += 1;
-                        totalSegmentCount += 1;
                         for (var j = 1; j < track.Curve.Count; j++)
                         {
                             var curve = track.Curve[j];
