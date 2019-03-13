@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
+using AssetStudioCore.Classes;
 
 namespace AzurLaneLive2DExtract
 {
@@ -15,6 +16,7 @@ namespace AzurLaneLive2DExtract
         public bool Loop { get; set; }
 
         public List<ImportedAnimationKeyframedTrack> TrackList { get; set; } = new List<ImportedAnimationKeyframedTrack>();
+        public List<AnimationEvent> EventList { get; set; }
 
         public ImportedAnimationKeyframedTrack FindTrack(string name)
         {

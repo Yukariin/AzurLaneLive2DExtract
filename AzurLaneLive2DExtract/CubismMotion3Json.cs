@@ -10,6 +10,7 @@ namespace AssetStudioCore
         public int Version;
         public SerializableMeta Meta;
         public SerializableCurve[] Curves;
+        public SerializableUserData[] UserData;
     }
 
     public class SerializableMeta
@@ -29,5 +30,11 @@ namespace AssetStudioCore
         public string Target;
         public string Id;
         public List<float> Segments;
+    };
+
+    public class SerializableUserData
+    {
+        public float Time;
+        public string Value;
     };
 }

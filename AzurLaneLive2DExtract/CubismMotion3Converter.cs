@@ -29,6 +29,7 @@ namespace AzurLaneLive2DExtract
                 iAnim.SampleRate = animationClip.m_SampleRate;
                 iAnim.Duration = animationClip.m_MuscleClip.m_StopTime;
                 iAnim.Loop = animationClip.m_MuscleClip.m_LoopTime;
+                iAnim.EventList = animationClip.m_Events;
                 var m_Clip = animationClip.m_MuscleClip.m_Clip;
                 var streamedFrames = m_Clip.m_StreamedClip.ReadData();
                 var m_ClipBindingConstant = animationClip.m_ClipBindingConstant;

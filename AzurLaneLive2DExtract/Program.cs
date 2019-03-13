@@ -81,9 +81,7 @@ namespace AzurLaneLive2DExtract
                             Duration = animation.Duration,
                             Fps = animation.SampleRate,
                             Loop = animation.Loop,
-                            CurveCount = animation.TrackList.Count,
-                            UserDataCount = 0,
-                            TotalUserDataSize = 0
+                            CurveCount = animation.TrackList.Count
                         },
                         Curves = new SerializableCurve[animation.TrackList.Count]
                     };
@@ -149,9 +147,24 @@ namespace AzurLaneLive2DExtract
                             totalSegmentCount++;
                         }
                     }
-
                     json.Meta.TotalSegmentCount = totalSegmentCount;
                     json.Meta.TotalPointCount = totalPointCount;
+
+                    var userDataCount = animation.EventList.Count;
+                    var totalUserDataSize = 0;
+                    json.UserData = new SerializableUserData[animation.EventList.Count];
+                    for (int e = 0; e < animation.EventList.Count; e++)
+                    {
+                        var ev = animation.EventList[e];
+                        json.UserData[e] = new SerializableUserData
+                        {
+                            Time = ev.time,
+                            Value = ev.stringParameter
+                        };
+                        totalUserDataSize += ev.stringParameter.Length;
+                    }
+                    json.Meta.UserDataCount = userDataCount;
+                    json.Meta.TotalUserDataSize = totalUserDataSize;
 
                     motions.Add($"motions/{animation.Name}.motion3.json");
                     File.WriteAllText(Path.Combine(destAnimationPath, $"{animation.Name}.motion3.json"),
