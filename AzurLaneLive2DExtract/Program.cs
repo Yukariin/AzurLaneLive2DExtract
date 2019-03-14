@@ -85,8 +85,8 @@ namespace AzurLaneLive2DExtract
                         },
                         Curves = new SerializableCurve[animation.TrackList.Count]
                     };
-                    int totalSegmentCount = 0;
-                    int totalPointCount = 0;
+                    int totalSegmentCount = 1;
+                    int totalPointCount = 1;
                     for (int i = 0; i < animation.TrackList.Count; i++)
                     {
                         var track = animation.TrackList[i];
