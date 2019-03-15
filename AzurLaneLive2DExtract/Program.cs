@@ -173,6 +173,7 @@ namespace AzurLaneLive2DExtract
                 //model
                 var job = new JObject();
                 var jarray = new JArray();
+                motions.Sort();
                 foreach (var motion in motions)
                 {
                     var tempjob = new JObject();
