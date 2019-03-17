@@ -182,6 +182,33 @@ namespace AzurLaneLive2DExtract
                 }
                 job[""] = jarray;
 
+                var groups = new List<SerializableGroup>();
+                var eyeBlinkParams = assets.Where(x => x.Type == ClassIDReference.MonoBehaviour)
+                    .Select(x => new MonoBehaviour(x))
+                    .Where(x => new MonoScript(x.m_Script.Get()).m_ClassName == "CubismEyeBlinkParameter")
+                    .Select(x => new GameObject(x.m_GameObject.Get()).m_Name);
+                var lipSyncParams = assets.Where(x => x.Type == ClassIDReference.MonoBehaviour)
+                    .Select(x => new MonoBehaviour(x))
+                    .Where(x => new MonoScript(x.m_Script.Get()).m_ClassName == "CubismMouthParameter")
+                    .Select(x => new GameObject(x.m_GameObject.Get()).m_Name);
+                if (eyeBlinkParams.Count() > 0)
+                {
+                    groups.Add(new SerializableGroup
+                    {
+                        Target = "Parameter",
+                        Name = "EyeBlink",
+                        Ids = eyeBlinkParams.ToArray()
+                    });
+                }
+                if (lipSyncParams.Count() > 0)
+                {
+                    groups.Add(new SerializableGroup
+                    {
+                        Target = "Parameter",
+                        Name = "LipSync",
+                        Ids = lipSyncParams.ToArray()
+                    });
+                }
                 var model3 = new CubismModel3Json
                 {
                     Version = 3,
@@ -192,21 +219,7 @@ namespace AzurLaneLive2DExtract
                         Physics = $"{physics.m_Name}.json",
                         Motions = job
                     },
-                    Groups = new[]
-                    {
-                        new SerializableGroup
-                        {
-                            Target = "Parameter",
-                            Name = "LipSync",
-                            Ids = new[] {"ParamMouthOpenY"}
-                        },
-                        new SerializableGroup
-                        {
-                            Target = "Parameter",
-                            Name = "EyeBlink",
-                            Ids = new[] {"ParamEyeLOpen", "ParamEyeROpen"}
-                        }
-                    }
+                    Groups = groups.ToArray()
                 };
                 File.WriteAllText(Path.Combine(destPath, $"{name}.model3.json"), JsonConvert.SerializeObject(model3, Formatting.Indented));
             }
