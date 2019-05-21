@@ -81,6 +81,7 @@ namespace AzurLaneLive2DExtract
                             Duration = animation.Duration,
                             Fps = animation.SampleRate,
                             Loop = animation.Loop,
+                            AreBeziersRestricted = true,
                             CurveCount = animation.TrackList.Count
                         },
                         Curves = new SerializableCurve[animation.TrackList.Count]
@@ -191,6 +192,15 @@ namespace AzurLaneLive2DExtract
                     .Select(x => new MonoBehaviour(x))
                     .Where(x => new MonoScript(x.m_Script.Get()).m_ClassName == "CubismMouthParameter")
                     .Select(x => new GameObject(x.m_GameObject.Get()).m_Name);
+                /*var lookParams = assets.Where(x => x.Type == ClassIDReference.MonoBehaviour)
+                    .Select(x => new MonoBehaviour(x))
+                    .Where(x => new MonoScript(x.m_Script.Get()).m_ClassName == "CubismLookParameter")
+                    .Select(x => new GameObject(x.m_GameObject.Get()).m_Name);
+                Console.WriteLine($"Found {lookParams.Count()} CubismLookParameter!");
+                foreach (var param in lookParams)
+                {
+                    Console.WriteLine($"Found CubismLookParameter {param}!");
+                }*/
                 if (eyeBlinkParams.Count() > 0)
                 {
                     groups.Add(new SerializableGroup
